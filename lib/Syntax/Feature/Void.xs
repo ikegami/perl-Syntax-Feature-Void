@@ -27,14 +27,9 @@ STATIC OP* remove_sub_call(pTHX_ OP* entersubop) {
 
 STATIC OP* parse_void(pTHX_ GV* namegv, SV* psobj, U32* flagsp) {
 #define parse_void(a,b,c) parse_void(aTHX_ a,b,c)
-   OP* termop;
-
    PERL_UNUSED_ARG(namegv);
    PERL_UNUSED_ARG(psobj);
-
-   termop = parse_termexpr(0);
-
-   return op_contextualize(termop, G_VOID);
+   return op_contextualize(parse_termexpr(0), G_VOID);
 }
 
 
