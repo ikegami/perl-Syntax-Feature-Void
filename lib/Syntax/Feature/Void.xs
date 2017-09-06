@@ -5,7 +5,6 @@
 #include "../../../ppport.h"
 #include "../../../callparser1.h"
 
-
 STATIC OP* remove_sub_call(pTHX_ OP* entersubop) {
 #define remove_sub_call(a) remove_sub_call(aTHX_ a)
    OP* pushop;
@@ -52,8 +51,7 @@ MODULE = Syntax::Feature::Void   PACKAGE = Syntax::Feature::Void
 
 BOOT:
 {
-   const char voidname[] = "Syntax::Feature::Void::void";
-   CV* const voidcv = get_cvn_flags(voidname, sizeof(voidname)-1, GV_ADD);
+   CV* const voidcv = get_cvs("Syntax::Feature::Void::void", GV_ADD);
    cv_set_call_parser(voidcv, parse_void, &PL_sv_undef);
    cv_set_call_checker(voidcv, ck_void, &PL_sv_undef);
 }
