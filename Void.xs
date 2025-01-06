@@ -2,7 +2,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#include "../../../ppport.h"
+#include "ppport.h"
 
 
 STATIC SV *hint_key_sv;

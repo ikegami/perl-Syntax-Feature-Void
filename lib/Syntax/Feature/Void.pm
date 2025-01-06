@@ -1,3 +1,4 @@
+
 package Syntax::Feature::Void;
 
 use strict;
@@ -105,38 +106,46 @@ Evalutes EXPR in void context.
 =back
 
 
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-Syntax-Feature-Void at rt.cpan.org>,
-or through the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Syntax-Feature-Void>.
-I will be notified, and then you'll automatically be notified of progress on your bug as I make changes.
-
-
-=head1 SUPPORT
+=head1 DOCUMENTATION AND SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc Syntax::Feature::Void
 
-You can also look for information at:
+You can also find it online at this location:
 
-=over 4
+=over
 
-=item * Search CPAN
+=item * L<https://metacpan.org/dist/Syntax-Feature-Void>
 
-L<http://search.cpan.org/dist/Syntax-Feature-Void>
+=back
 
-=item * RT: CPAN's request tracker
+If you need help, the following are great resources:
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Syntax-Feature-Void>
+=over
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * L<https://stackoverflow.com/|StackOverflow>
 
-L<http://annocpan.org/dist/Syntax-Feature-Void>
+=item * L<http://www.perlmonks.org/|PerlMonks>
 
-=item * CPAN Ratings
+=item * You may also contact the author directly.
 
-L<http://cpanratings.perl.org/d/Syntax-Feature-Void>
+=back
+
+
+=head1 BUGS
+
+Please report any bugs or feature requests using L<https://github.com/ikegami/perl-Syntax-Feature-Void/issues>.
+I will be notified, and then you'll automatically be notified of progress on your bug as I make changes.
+
+
+=head1 REPOSITORY
+
+=over
+
+=item * Web: L<https://github.com/ikegami/perl-Syntax-Feature-Void>
+
+=item * git: L<https://github.com/ikegami/perl-Syntax-Feature-Void.git>
 
 =back
 
