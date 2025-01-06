@@ -4,7 +4,6 @@ Changes
 lib/Syntax/Feature/Void.pm
 lib/Syntax/Feature/Void.xs
 LICENSE.txt
-make_call_parser.PL
 MANIFEST
 MANIFEST.SKIP
 META.yml

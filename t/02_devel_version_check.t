@@ -30,7 +30,7 @@ sub slurp_file {
    my $base_file    = slurp_file('lib/Syntax/Feature/Void.pm');
    my $changes_file = slurp_file('Changes');
 
-   my ($version) = $base_file =~ /\bqv\('v([^']*)'\)/
+   my ($version) = $base_file =~ /\bqv\(\s*'v([^']*)'\s*\)/
       or die("Can't find version\n");
 
    my @parts = split(/\./, $version);
@@ -39,7 +39,7 @@ sub slurp_file {
       or die("Can't find version in POD\n");
 
    my ($changes_version) = $changes_file =~ /^([0-9]\S*)/m
-      or die("Can't find version in POD\n");
+      or die("Can't find version in Changes file\n");
 
    is($pod_version, $version, "Version in POD matches actual version");
 

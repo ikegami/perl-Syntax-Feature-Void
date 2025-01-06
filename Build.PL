@@ -25,14 +25,11 @@ my $build = Module::Build->new(
       #'Test::Pod::Coverage' => 1.08,      # Optional.
    },
    requires => {
-      'perl'               => 5.014000,
-      'Devel::CallParser'  => 0,
-      'Lexical::Sub'       => 0,
-      'syntax'             => 0.004,
-      'version'            => 0,
-      'XSLoader'           => 0,
+      'perl'     => 5.014000,
+      'syntax'   => 0.004,
+      'version'  => 0,
+      'XSLoader' => 0,
    },
-   PL_files => { 'make_call_parser.PL' => 'callparser1.h' },
    add_to_cleanup => [ 'Syntax-Feature-Void-*' ],
    meta_merge  => {
       resources => {

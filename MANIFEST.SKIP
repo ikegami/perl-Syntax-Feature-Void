@@ -12,6 +12,5 @@ pod2htmd.tmp
 pod2htmi.tmp
 ~$
 .bak$
-^callparser1.h$
 ^lib/Syntax/Feature/Void\.c$
 ^lib/Syntax/Feature/Void\.o$

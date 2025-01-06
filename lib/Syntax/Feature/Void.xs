@@ -3,45 +3,45 @@
 #include "perl.h"
 #include "XSUB.h"
 #include "../../../ppport.h"
-#include "../../../callparser1.h"
 
-STATIC OP* remove_sub_call(pTHX_ OP* entersubop) {
-#define remove_sub_call(a) remove_sub_call(aTHX_ a)
-   OP* pushop;
-   OP* realop;
-   OP* cvop;
 
-   pushop = cUNOPx(entersubop)->op_first;
-   if (!OpHAS_SIBLING(pushop))
-      pushop = cUNOPx(pushop)->op_first;
+STATIC SV *hint_key_sv;
 
-   realop = OpSIBLING(pushop);
-   if (!realop)
-      return entersubop;
 
-   cvop = OpSIBLING(realop);
-   if (!cvop)
-      return entersubop;
+#define is_syntax_enabled() SvTRUE( cop_hints_fetch_sv( PL_curcop, hint_key_sv, 0, 0 ) )
 
-   OpMORESIB_set(pushop, cvop);
-   OpLASTSIB_set(realop, NULL);
-   op_free(entersubop);
-   return realop;
+
+// Only available since 5.28.
+#ifndef wrap_keyword_plugin
+STATIC void wrap_keyword_plugin( pTHX_ Perl_keyword_plugin_t new_plugin, Perl_keyword_plugin_t *old_plugin_p ) {
+#define wrap_keyword_plugin( a, b ) wrap_keyword_plugin( aTHX_ a, b )
+   if ( !*old_plugin_p ) {
+      *old_plugin_p = PL_keyword_plugin;
+      PL_keyword_plugin = new_plugin;
+   }
 }
+#endif
 
-STATIC OP* parse_void(pTHX_ GV* namegv, SV* psobj, U32* flagsp) {
-#define parse_void(a,b,c) parse_void(aTHX_ a,b,c)
-   PERL_UNUSED_ARG(namegv);
-   PERL_UNUSED_ARG(psobj);
-   return op_contextualize(parse_termexpr(0), G_VOID);
+
+STATIC OP *parse_void( pTHX ) {
+#define parse_void() parse_void( aTHX )
+   return op_contextualize( parse_termexpr( 0 ), G_VOID );
 }
 
 
-STATIC OP* ck_void(pTHX_ OP* o, GV* namegv, SV* ckobj) {
-#define check_void(a,b,c) check_void(aTHX_ a,b,c)
-   PERL_UNUSED_ARG(namegv);
-   PERL_UNUSED_ARG(ckobj);
-   return remove_sub_call(o);
+STATIC Perl_keyword_plugin_t next_keyword_plugin = NULL;
+#define next_keyword_plugin( a, b, c ) next_keyword_plugin( aTHX_ a, b, c )
+
+
+STATIC int my_keyword_plugin( pTHX_ char *keyword_ptr, STRLEN keyword_len, OP **op_ptr ) {
+   if ( is_syntax_enabled() ) {
+      if ( memEQs( keyword_ptr, keyword_len, "void" ) ) {
+         *op_ptr = parse_void();
+         return KEYWORD_PLUGIN_EXPR;
+      }
+   }
+
+   return next_keyword_plugin( keyword_ptr, keyword_len, op_ptr );
 }
 
 
@@ -49,9 +49,19 @@ STATIC OP* ck_void(pTHX_ OP* o, GV* namegv, SV* ckobj) {
 
 MODULE = Syntax::Feature::Void   PACKAGE = Syntax::Feature::Void
 
+
+void
+hint_key()
+   PPCODE:
+      SvREFCNT_inc( hint_key_sv );
+      XPUSHs( hint_key_sv );
+      XSRETURN( 1 );
+
+
 BOOT:
 {
-   CV* const voidcv = get_cvs("Syntax::Feature::Void::void", GV_ADD);
-   cv_set_call_parser(voidcv, parse_void, &PL_sv_undef);
-   cv_set_call_checker(voidcv, ck_void, &PL_sv_undef);
+   wrap_keyword_plugin( my_keyword_plugin, &next_keyword_plugin );
+
+   hint_key_sv = newSVpvs( "Syntax::Feature::Void::void" );
+   SvREADONLY_on( hint_key_sv );
 }

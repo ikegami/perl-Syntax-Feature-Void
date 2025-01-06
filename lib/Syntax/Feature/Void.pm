@@ -3,22 +3,14 @@ package Syntax::Feature::Void;
 use strict;
 use warnings;
 
-use version; our $VERSION = qv('v1.3.0');
+use version; our $VERSION = qv( 'v1.3.0' );
 
-use Devel::CallParser qw( );
-use XSLoader          qw( );
+use XSLoader qw( );
 
-XSLoader::load('Syntax::Feature::Void', $VERSION);
+XSLoader::load( 'Syntax::Feature::Void', $VERSION );
 
-sub import {
-    require Lexical::Sub;
-    Lexical::Sub->import( void => \&void );
-}
-
-sub unimport {
-    require Lexical::Sub;
-    Lexical::Sub->unimport( void => \&void );
-}
+sub import   { $^H{ hint_key() } = 1; }
+sub unimport { $^H{ hint_key() } = 0; }
 
 *install   = \&import;    # For syntax.pm
 *uninstall = \&unimport;  # For syntax.pm
@@ -60,10 +52,9 @@ Syntax::Feature::Void is a lexically-scoped pragma that
 provides the C<void> operator to force void context.
 Not that anyone needs that.
 
-This module serves as a demonstration of the
-L<C<cv_set_call_parser>|perlapi/cv_set_call_parser> and
-L<C<cv_set_call_checker>|perlapi/cv_set_call_checker>
-Perl API calls.
+This module serves as a demonstration of the ability to
+add keywords to the Perl language using
+L<C<PL_keyword_plugin>|perlapi/PL_keyword_plugin>.
 
 
 =head2 C<< use syntax qw( void ); >>
@@ -77,7 +68,8 @@ Enables the use of C<void> until the end of the current lexical scope.
 
 =head2 C<< no Syntax::Feature::Void; >>
 
-Restores the standard behaviour of C<void> (a sub call) until the end of the current lexical scope.
+Restores the standard behaviour of C<void> (a sub call) until the
+end of the current lexical scope.
 
 
 =head2 C<< void EXPR >>
@@ -95,6 +87,8 @@ Evalutes EXPR in void context.
 
 =item * C<uninstall>
 
+=item * C<hint_key>
+
 =back
 
 =end comment
@@ -105,12 +99,6 @@ Evalutes EXPR in void context.
 =over 4
 
 =item * L<syntax>
-
-=item * L<Devel::CallParser>
-
-=item * L<Devel::CallChecker>
-
-=item * L<Lexical::Sub>
 
 =item * L<perlapi>
 
@@ -158,7 +146,7 @@ L<http://cpanratings.perl.org/d/Syntax-Feature-Void>
 Eric Brine, C<< <ikegami@adaelis.com> >>
 
 
-=head1 COPYRIGHT & LICENSE
+=head1 COPYRIGHT AND LICENSE
 
 No rights reserved.
 

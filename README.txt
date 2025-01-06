@@ -23,8 +23,6 @@ This module requires these other modules and libraries:
     Module::Build 0.36_14       (For installation only)
     Software::License::CC0_1_0  (For installation only)
     Test::More                  (For testing only)
-    Devel::CallParser
-    Lexical::Sub
     strict
     syntax 0.004
     version
@@ -54,7 +52,7 @@ You can also look for information at:
         http://search.cpan.org/dist/Syntax-Feature-Void
 
 
-COPYRIGHT AND LICENCE
+COPYRIGHT AND LICENSE
 
 No rights reserved.
 

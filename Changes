@@ -1,6 +1,8 @@
 Revision history for Syntax-Feature-Void
 
 1.4.0  ~~~/~~/~~
+       - Switched to using the keyword plugin since Devel::CallParser
+         and Lexical::Sub are no longer compatible.
        - ~~~
 
 1.2.0  2017/08/07

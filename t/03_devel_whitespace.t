@@ -26,7 +26,7 @@ sub read_manifest {
       or die("Can't open \"MANIFEST\": $!\n");
 
    my @manifest = <$fh>;
-   chomp @manifest;
+   s/\s.*//s for @manifest;
    return @manifest;
 }
 
