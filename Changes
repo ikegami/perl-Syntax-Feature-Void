@@ -1,6 +1,7 @@
 Revision history for Syntax-Feature-Void
 
 1.6.0  ~~~~-~~-~~
+       - Improved emulation of `wrap_keyword_plugin`.
        - ~~~
 
 1.4.0  2025-01-06

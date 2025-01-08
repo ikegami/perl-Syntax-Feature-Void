@@ -18,3 +18,4 @@ t/07_basic.t
 t/08_pragma_a.t
 t/09_pragma_b.t
 Void.xs
+wrap_keyword_plugin.inc.c
